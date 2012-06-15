@@ -4,13 +4,22 @@ import java.util.*;
 
 public class PrimeFactorization {
 	
-	private List<Long> findPrimeFactors(Long no) {
+	public List<Long> findPrimeFactors(Long no) {
 		List<Long> factors = new ArrayList<Long>();
-		for(long i = 2; i*i <= no; i++) {
-			if(no % i == 0 && isPrime(i)) {
-//				System.out.println(i + "");
-				factors.add(i);
+		
+		for(long i = 2; i <= no; i++) {
+			if(!isPrime(i)) {
+				continue;
 			}
+			
+			while(no % i == 0) {
+				factors.add(i);
+				no /= i;
+			}
+		}
+		
+		if(factors.size() == 0) {//must be prime
+			factors.add(no);
 		}
 		
 		return factors;
@@ -40,7 +49,7 @@ public class PrimeFactorization {
 	public static void main(String[] args) {
 		PrimeFactorization pf = new PrimeFactorization();
 		List<Long> factors = pf.findPrimeFactors(Long.parseLong("600851475143"));
-		System.out.println(factors.get(factors.size()-1));
+		System.out.println(factors.toString());
 	}
 
 }
